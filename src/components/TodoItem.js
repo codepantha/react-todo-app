@@ -1,29 +1,35 @@
-import React from "react";
-import styles from "./TodoItem.module.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './TodoItem.module.css';
 
-function TodoItem(props) {
-
+function TodoItem({ deleteTodoProps, handleChangeProps, todo }) {
   const completedStyle = {
-    fontStyle: "italic",
-    color: "#595959",
+    fontStyle: 'italic',
+    color: '#595959',
     opacity: 0.4,
-    textDecoration: "line-through",
-  }
+    textDecoration: 'line-through',
+  };
 
   return (
     <li className={styles.item}>
       <input
         type="checkbox"
         className={styles.checkbox}
-        checked={props.todo.completed}
-        onChange={() => props.handleChangeProps(props.todo.id)}
+        checked={todo.completed}
+        onChange={() => handleChangeProps(todo.id)}
       />
-      <button onClick={() => props.deleteTodoProps(props.todo.id)}>Delete</button>
-      <span style={props.todo.completed ? completedStyle : null}>
-        {props.todo.title}
+      <button type="button" onClick={() => deleteTodoProps(todo.id)}>Delete</button>
+      <span style={todo.completed ? completedStyle : null}>
+        {todo.title}
       </span>
     </li>
   );
 }
+
+TodoItem.propTypes = {
+  deleteTodoProps: PropTypes.func.isRequired,
+  handleChangeProps: PropTypes.func.isRequired,
+  todo: PropTypes.instanceOf(Object).isRequired,
+};
 
 export default TodoItem;
