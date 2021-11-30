@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './TodoItem.module.css';
 
@@ -6,6 +6,12 @@ function TodoItem({
   deleteTodoProps, handleChangeProps, todo, setUpdate,
 }) {
   const [editing, setEditing] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      console.log("unmounted")
+    }
+  }, []);
 
   const completedStyle = {
     fontStyle: 'italic',

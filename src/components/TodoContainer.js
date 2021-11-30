@@ -9,24 +9,22 @@ class TodoContainer extends Component {
     super(props);
 
     this.state = {
-      todos: [
-        {
-          id: uuidv4(),
-          title: 'Setup development environment',
-          completed: true,
-        },
-        {
-          id: uuidv4(),
-          title: 'Develop website and add content',
-          completed: false,
-        },
-        {
-          id: uuidv4(),
-          title: 'Deploy to live server',
-          completed: false,
-        },
-      ],
+      todos: [],
     };
+  }
+
+  componentDidMount() {
+    const savedTodos = JSON.parse(localStorage.getItem('todos'));
+    this.setState({
+      todos: savedTodos
+    })
+  }
+
+  componentDidUpdate(prevProps,prevState) {
+    const { todos } = this.state;
+    if (prevState.todos !== todos) {
+      localStorage.setItem('todos', JSON.stringify(todos));
+    }
   }
 
   handleChange = (id) => {
